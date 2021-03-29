@@ -4,6 +4,8 @@ import org.apache.commons.fileupload.FileItem;
 import org.apache.commons.fileupload.FileUploadException;
 import org.apache.commons.fileupload.disk.DiskFileItemFactory;
 import org.apache.commons.fileupload.servlet.ServletFileUpload;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletContext;
@@ -18,11 +20,13 @@ import java.io.IOException;
 import java.util.List;
 
 public class PhotoUpload extends HttpServlet {
+    private static final Logger LOG = LoggerFactory.getLogger(PhotoUpload.class);
+
     protected void doPost(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
         DiskFileItemFactory factory = new DiskFileItemFactory();
         HttpSession session = request.getSession();
         String id = (String) session.getAttribute("id");
-
+        LOG.info("info message");
         ServletContext servletContext = this.getServletConfig().getServletContext();
         File repository = (File) servletContext.getAttribute("javax.servlet.context.tempdir");
         factory.setRepository(repository);
@@ -42,7 +46,7 @@ public class PhotoUpload extends HttpServlet {
                 }
             }
         } catch (FileUploadException e) {
-            e.printStackTrace();
+            LOG.trace(e.toString());
         }
         response.sendRedirect(request.getContextPath() + "/candidates.do");
     }

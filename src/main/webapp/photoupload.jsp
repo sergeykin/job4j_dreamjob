@@ -13,6 +13,9 @@
 <body>
 
 <div class="container">
+    <li class="nav-item">
+        <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
+    </li>
     <h2>Загрузка картинки</h2>
     <form action="<c:url value='/photoupload'/>" method="post" enctype="multipart/form-data">
         <div class="checkbox">

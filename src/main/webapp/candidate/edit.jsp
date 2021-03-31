@@ -9,6 +9,8 @@
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
 <%@ page import="ru.job4j.dream.model.Post" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
+
 <!doctype html>
 <html lang="en">
 <head>
@@ -39,6 +41,9 @@
         candidate = PsqlStore.instOf().findByIdCandidate(Integer.valueOf(id));
     }
 %>
+<li class="nav-item">
+    <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
+</li>
 <div class="container pt-3">
     <div class="row">
         <div class="card" style="width: 100%">
@@ -49,6 +54,7 @@
                 Редактирование кандидата.
                 <% } %>
             </div>
+
             <div class="card-body">
                 <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">

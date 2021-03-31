@@ -32,6 +32,9 @@
     <title>Работа мечты</title>
 </head>
 <body>
+<li class="nav-item">
+    <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
+</li>
 <div class="container pt-3">
 
     <div class="row">
@@ -39,6 +42,7 @@
             <div class="card-header">
                 Кандидаты
             </div>
+
             <div class="card-body">
                 <table class="table">
                     <thead>

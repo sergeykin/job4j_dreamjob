@@ -17,5 +17,8 @@ public class PsqlMain {
         }
 
         System.out.println(store.findById(1).getName());
+        System.out.println("asdf");
+
+
     }
 }

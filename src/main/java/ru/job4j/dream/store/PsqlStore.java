@@ -30,11 +30,13 @@ public class PsqlStore implements Store {
         )) {
             cfg.load(io);
         } catch (Exception e) {
+            LOG.error(e.toString(),e);
             throw new IllegalStateException(e);
         }
         try {
             Class.forName(cfg.getProperty("jdbc.driver"));
         } catch (Exception e) {
+            LOG.error(e.toString(),e);
             throw new IllegalStateException(e);
         }
         pool.setDriverClassName(cfg.getProperty("jdbc.driver"));
@@ -66,7 +68,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
         return posts;
     }
@@ -83,7 +85,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
         return candidates;
     }
@@ -109,7 +111,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
         return post;
     }
@@ -126,7 +128,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
         return candidate;
     }
@@ -139,7 +141,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, post.getId());
             ps.execute();
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
     }
 
@@ -151,7 +153,7 @@ public class PsqlStore implements Store {
             ps.setInt(2, candidate.getId());
             ps.execute();
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
     }
 
@@ -163,7 +165,7 @@ public class PsqlStore implements Store {
             ps.setInt(1, id);
             ps.execute();
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
     }
 
@@ -179,7 +181,7 @@ public class PsqlStore implements Store {
                 post = new Post(id, it.getString("name"));
             }
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
         return post;
     }
@@ -205,7 +207,7 @@ public class PsqlStore implements Store {
                 candidate = new Candidate(id, it.getString("name"));
             }
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
         return candidate;
     }
@@ -227,7 +229,7 @@ public class PsqlStore implements Store {
             ps.setInt(1, id);
             ps.execute();
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
     }
 
@@ -245,7 +247,7 @@ public class PsqlStore implements Store {
                         it.getString("email"), it.getString("password"));
             }
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
         return user;
     }
@@ -265,7 +267,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
         return user;
     }
@@ -284,7 +286,7 @@ public class PsqlStore implements Store {
             ps.setInt(4, user.getId());
             ps.execute();
         } catch (Exception e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
     }
 }

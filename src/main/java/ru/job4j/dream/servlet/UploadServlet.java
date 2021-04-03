@@ -55,7 +55,7 @@ public class UploadServlet extends HttpServlet {
                 }
             }
         } catch (FileUploadException e) {
-            LOG.trace(e.toString());
+            LOG.error(e.toString(),e);
         }
         doGet(req, resp);
     }

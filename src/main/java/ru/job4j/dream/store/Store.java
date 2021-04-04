@@ -22,5 +22,6 @@ public interface Store {
     Post findById(int id);
     Candidate findByIdCandidate(int id);
     User findByIdUser(int id);
+    User findByEmailUser(String email);
 
 }

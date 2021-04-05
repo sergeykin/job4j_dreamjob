@@ -17,11 +17,9 @@ public interface Store {
     void save(User post);
 
     void deleteCandidate(int id);
-    void deleteUser(int id);
 
     Post findById(int id);
     Candidate findByIdCandidate(int id);
-    User findByIdUser(int id);
     User findByEmailUser(String email);
 
 }

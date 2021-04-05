@@ -221,36 +221,6 @@ public class PsqlStore implements Store {
         }
     }
 
-    @Override
-    public void deleteUser(int id) {
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("delete from users where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
-        ) {
-            ps.setInt(1, id);
-            ps.execute();
-        } catch (Exception e) {
-            LOG.error(e.toString(),e);
-        }
-    }
-
-    @Override
-    public User findByIdUser(int id) {
-        User user = null;
-        try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("select name, email, password " +
-                     "from users where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
-        ) {
-            ps.setInt(1, id);
-            ps.execute();
-            try (ResultSet it = ps.executeQuery()) {
-                user = new User(id, it.getString("name"),
-                        it.getString("email"), it.getString("password"));
-            }
-        } catch (Exception e) {
-            LOG.error(e.toString(),e);
-        }
-        return user;
-    }
 
     private User create(User user) {
         try (Connection cn = pool.getConnection();

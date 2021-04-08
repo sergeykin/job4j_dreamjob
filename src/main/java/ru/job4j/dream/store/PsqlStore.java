@@ -30,13 +30,13 @@ public class PsqlStore implements Store {
         )) {
             cfg.load(io);
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
             throw new IllegalStateException(e);
         }
         try {
             Class.forName(cfg.getProperty("jdbc.driver"));
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
             throw new IllegalStateException(e);
         }
         pool.setDriverClassName(cfg.getProperty("jdbc.driver"));
@@ -60,7 +60,7 @@ public class PsqlStore implements Store {
     public Collection<Post> findAllPosts() {
         List<Post> posts = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM post")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM post")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -68,7 +68,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
         return posts;
     }
@@ -77,7 +77,7 @@ public class PsqlStore implements Store {
     public Collection<Candidate> findAllCandidates() {
         List<Candidate> candidates = new ArrayList<>();
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("SELECT * FROM candidate")
+             PreparedStatement ps = cn.prepareStatement("SELECT * FROM candidate")
         ) {
             try (ResultSet it = ps.executeQuery()) {
                 while (it.next()) {
@@ -85,7 +85,7 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
         return candidates;
     }
@@ -101,7 +101,7 @@ public class PsqlStore implements Store {
 
     private Post create(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO post(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO post(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
             ps.execute();
@@ -111,14 +111,14 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
         return post;
     }
 
     private Candidate create(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO candidate(name) VALUES (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
             ps.execute();
@@ -128,44 +128,44 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
         return candidate;
     }
 
     private void update(Post post) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("update post set name = (?) where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("update post set name = (?) where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, post.getName());
             ps.setInt(2, post.getId());
             ps.execute();
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
     }
 
     private void update(Candidate candidate) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("update candidate set name = (?) where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("update candidate set name = (?) where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, candidate.getName());
             ps.setInt(2, candidate.getId());
             ps.execute();
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
     }
 
     @Override
     public void deleteCandidate(int id) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("delete from candidate where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("delete from candidate where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, id);
             ps.execute();
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
     }
 
@@ -173,7 +173,7 @@ public class PsqlStore implements Store {
     public Post findById(int id) {
         Post post = null;
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("select name from post where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("select name from post where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, id);
             ps.execute();
@@ -181,7 +181,7 @@ public class PsqlStore implements Store {
                 post = new Post(id, it.getString("name"));
             }
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
         return post;
     }
@@ -199,7 +199,7 @@ public class PsqlStore implements Store {
     public Candidate findByIdCandidate(int id) {
         Candidate candidate = null;
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("select name from candidate where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("select name from candidate where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setInt(1, id);
             ps.execute();
@@ -207,7 +207,7 @@ public class PsqlStore implements Store {
                 candidate = new Candidate(id, it.getString("name"));
             }
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
         return candidate;
     }
@@ -221,11 +221,10 @@ public class PsqlStore implements Store {
         }
     }
 
-
     private User create(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("INSERT INTO users(name, email, password) " +
-                     "VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("INSERT INTO users(name, email, password) "
+                     + "VALUES (?, ?, ?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -237,18 +236,18 @@ public class PsqlStore implements Store {
                 }
             }
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
         return user;
     }
 
     private void update(User user) {
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("update users " +
-                     "set name = (?) " +
-                     ",email = (?) " +
-                     ",password = (?) " +
-                     "where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("update users "
+                     + "set name = (?) "
+                     + ",email = (?) "
+                     + ",password = (?) "
+                     + "where id = (?)", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, user.getName());
             ps.setString(2, user.getEmail());
@@ -256,7 +255,7 @@ public class PsqlStore implements Store {
             ps.setInt(4, user.getId());
             ps.execute();
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
     }
 
@@ -264,8 +263,8 @@ public class PsqlStore implements Store {
     public User findByEmailUser(String email) {
         User user = null;
         try (Connection cn = pool.getConnection();
-             PreparedStatement ps =  cn.prepareStatement("select id, name, email, users.password " +
-                     "from users where email = ?", PreparedStatement.RETURN_GENERATED_KEYS)
+             PreparedStatement ps = cn.prepareStatement("select id, name, email, users.password "
+                     + "from users where email = ?", PreparedStatement.RETURN_GENERATED_KEYS)
         ) {
             ps.setString(1, email);
             ps.execute();
@@ -280,16 +279,8 @@ public class PsqlStore implements Store {
                     }
                 }
             }
-//            try (ResultSet it = ps.executeQuery()) {
-//                int id = it.getInt("id");
-//                String name = it.getString("name");
-//                String password = it.getString("password");
-//
-//                user = new User(it.getInt("id"), it.getString("name"),
-//                        it.getString("email"), it.getString("password"));
-//            }
         } catch (Exception e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
         return user;
     }

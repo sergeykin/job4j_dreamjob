@@ -3,15 +3,13 @@ package ru.job4j.dream.servlet;
 
 import ru.job4j.dream.model.Post;
 import ru.job4j.dream.store.PsqlStore;
-import ru.job4j.dream.store.PsqlStore;
-
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
-
+/** @noinspection checkstyle:EmptyLineSeparator*/
 public class PostServlet extends HttpServlet {
 
     @Override

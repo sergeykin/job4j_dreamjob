@@ -21,7 +21,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class UploadServlet extends HttpServlet {
+
     private static final Logger LOG = LoggerFactory.getLogger(UploadServlet.class.getName());
+
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
         List<String> images = new ArrayList<>();
@@ -55,7 +57,7 @@ public class UploadServlet extends HttpServlet {
                 }
             }
         } catch (FileUploadException e) {
-            LOG.error(e.toString(),e);
+            LOG.error(e.toString(), e);
         }
         doGet(req, resp);
     }

@@ -13,13 +13,17 @@ public interface Store {
     Collection<Candidate> findAllCandidates();
 
     void save(Post post);
+
     void save(Candidate candidate);
+
     void save(User post);
 
     void deleteCandidate(int id);
 
     Post findById(int id);
+
     Candidate findByIdCandidate(int id);
+
     User findByEmailUser(String email);
 
 }

@@ -27,6 +27,9 @@
         }
 
         function addRow(){
+            if (!validate()) {
+                return false;
+            }
             var name = $('#name').val();
             var fam = $('#fam').val();
             var sex = $('#sex').val();
@@ -40,6 +43,7 @@
                 '<td>' + sex +'</td>' +
                 '<td>' + comment +'</td>' +
                 '</tr>');
+            return true;
         }
     </script>
 </head>
@@ -72,8 +76,8 @@
             <label for="comment">Описание:</label>
             <input type="comment" class="form-control" id="comment" placeholder="Описание" name="comment">
         </div>
-        <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>
-        <button type="reset" class="btn btn-default" onclick="addRow();">Добавить</button>
+<!--        <button type="submit" class="btn btn-default" onclick="return validate();">Submit</button>-->
+        <button type="reset" class="btn btn-default" onclick="return addRow();">Добавить</button>
     </form>
 </div>
 

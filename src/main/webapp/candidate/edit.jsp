@@ -7,8 +7,8 @@
 --%>
 <%@ page contentType="text/html; charset=UTF-8" %>
 <%@ page import="ru.job4j.dream.store.PsqlStore" %>
-<%@ page import="ru.job4j.dream.model.Post" %>
 <%@ page import="ru.job4j.dream.model.Candidate" %>
+<%@ page import="ru.job4j.dream.model.City" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jstl/core" %>
 
 <!doctype html>
@@ -31,16 +31,63 @@
             integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6"
             crossorigin="anonymous"></script>
 
+    <script src="https://code.jquery.com/jquery-3.4.1.min.js" ></script>
+
+    <%
+        String id = request.getParameter("id");
+        City city = null;
+        Candidate candidate = null;
+        if (id != null) {
+            candidate = PsqlStore.instOf().findByIdCandidate(Integer.valueOf(id));
+            if (candidate.getCityid() != 0) {
+                city = PsqlStore.instOf().getCity(candidate.getCityid());
+            }
+        }
+        if (candidate == null) {
+            candidate = new Candidate(0, "", 0);
+        }
+        if (city == null) {
+            city = new City(0, "");
+        }
+
+    %>
+    <script>
+    function validate() {
+        if ($('#name').val() == '') {
+            alert($('#name').attr('placeholder'));
+            return false;
+        }
+        if ($('#city').val() == '') {
+            alert($('#city').attr('placeholder'));
+            return false;
+        }
+        return true;
+    }
+
+    function getCities() {
+        $.ajax({
+            type: "GET",
+            url: "http://localhost:8080/job4j_dreamjob/city",
+            dataType: "json",
+            success: function (data) {
+                var cityId = <%=city.getId()%>;
+                let cities = "<option value=\"\"></option>";
+                for (let i = 0; i < data.length; i++) {
+                    if (cityId === data[i]['id']) {
+                        cities += "<option value=" + data[i]['id'] + " selected>" + data[i]['name'] + "</option>";
+                    } else {
+                        cities += "<option value=" + data[i]['id'] + ">" + data[i]['name'] + "</option>";
+                    }
+                }
+                $('#city').html(cities);
+            }
+        })
+    }
+</script>
     <title>Работа мечты</title>
 </head>
-<body>
-<%
-    String id = request.getParameter("id");
-    Candidate candidate = new Candidate(0, "");
-    if (id != null) {
-        candidate = PsqlStore.instOf().findByIdCandidate(Integer.valueOf(id));
-    }
-%>
+<body onload="getCities()">>
+
 <li class="nav-item">
     <a class="nav-link" href="<%=request.getContextPath()%>/login.jsp"> <c:out value="${user.name}"/> | Выйти</a>
 </li>
@@ -59,9 +106,19 @@
                 <form action="<%=request.getContextPath()%>/candidates.do?id=<%=candidate.getId()%>" method="post">
                     <div class="form-group">
                         <label>Имя</label>
-                        <input type="text" class="form-control" name="name" value="<%=candidate.getName()%>">
+                        <input type="text" class="form-control" name="name"
+                               placeholder="Введите имя"
+                               id="name" value="<%=candidate.getName()%>">
                     </div>
-                    <button type="submit" class="btn btn-primary">Сохранить</button>
+                    <div class="form-group">
+                        <label for="city">Город</label>
+                        <select class="form-control" id="city" name="city"
+                                placeholder="Введите город"
+                                value="<%=city.getName()%>">
+                        </select>
+                    </div>
+
+                    <button type="submit" class="btn btn-primary" onclick="return validate();">Сохранить</button>
                 </form>
             </div>
         </div>

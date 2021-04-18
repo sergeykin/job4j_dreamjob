@@ -122,5 +122,10 @@
       <version>${junit.version}</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>com.github.ebaydatameta</groupId>
+      <artifactId>ser-json-fasterxml-java</artifactId>
+      <version>1.0.1</version>
+    </dependency>
   </dependencies>
 </project>

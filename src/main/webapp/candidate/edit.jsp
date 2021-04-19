@@ -69,6 +69,7 @@
             type: "GET",
             url: "http://localhost:8080/job4j_dreamjob/city",
             dataType: "json",
+            origin: "http://localhost:8080/job4j_dreamjob",
             success: function (data) {
                 var cityId = <%=city.getId()%>;
                 let cities = "<option value=\"\"></option>";

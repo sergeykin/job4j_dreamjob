@@ -12,6 +12,7 @@ import org.junit.Test;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import ru.job4j.dream.model.Post;
+import ru.job4j.dream.model.User;
 import ru.job4j.dream.store.PsqlStore;
 
 public class PostServletTest  {
@@ -34,9 +35,11 @@ public class PostServletTest  {
 
         HttpServletRequest request = mock(HttpServletRequest.class);
         HttpServletResponse response = mock(HttpServletResponse.class);
+        HttpSession session = mock(HttpSession.class);
+
         RequestDispatcher requestDispatcher = mock(RequestDispatcher.class);
-        when(request.getRequestDispatcher(anyString())).thenReturn(requestDispatcher);
-        request.setAttribute("posts", PsqlStore.instOf().findAllPosts());
+        when(request.getRequestDispatcher("posts.jsp")).thenReturn(requestDispatcher);
+        when(request.getSession()).thenReturn(session);
         PostServlet postServlet = new PostServlet();
         postServlet.doGet(request, response);
         verify(request).getRequestDispatcher("posts.jsp");
